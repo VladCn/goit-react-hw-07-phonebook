@@ -17,7 +17,7 @@ export function App() {
 
   useEffect(() => {
     trigger();
-  }, []);
+  }, [trigger]);
 
   return (
     <div
