@@ -9,7 +9,6 @@ export const contactsApi = createApi({
   endpoints: (builder) => ({
     fetchContact: builder.query({
       query: (params) => {
-        console.log(params);
         if (params) {
           return {
             url: "/contacts",

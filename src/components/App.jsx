@@ -6,14 +6,25 @@ import {
   useLazyFetchContactQuery,
 } from "../redux/contactSlice";
 import { ContactList } from "./ContactList";
+import { useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
 
 export function App() {
-  const [trigger, { data }] = useLazyFetchContactQuery();
-  const [createContact] = useCreateContactMutation();
+  const [trigger, { data, error: contactsError }] = useLazyFetchContactQuery();
+  const [createContact, { error: createContactError }] =
+    useCreateContactMutation();
 
-  const handleFilterContacts = ({ name }) => {
-    trigger({ name });
-  };
+  const filter = useSelector((state) => state.filter.value);
+
+  useEffect(() => {
+    if (contactsError || createContactError) {
+      toast.error("Error");
+    }
+  }, [contactsError, createContactError]);
+
+  useEffect(() => {
+    trigger({ name: filter });
+  }, [filter]);
 
   useEffect(() => {
     trigger();
@@ -35,7 +46,7 @@ export function App() {
     >
       <ContactForm createContact={createContact} contacts={data} />
       <ContactList contacts={data} />
-      <FilterInput onFilterContacts={handleFilterContacts} />
+      <FilterInput />
     </div>
   );
 }

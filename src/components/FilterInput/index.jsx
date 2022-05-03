@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setFilter } from "../../redux/filterSlice";
 
-export function FilterInput({ onFilterContacts }) {
+export function FilterInput() {
+  const dispatch = useDispatch();
   const [state, setState] = useState("");
 
   const handleFilterContact = (event) => {
     setState(event.target.value);
-    onFilterContacts({ name: event.target.value });
+    dispatch(setFilter(event.target.value));
   };
 
   return (

@@ -22,7 +22,7 @@ const Button = styled.button`
   width: 100px;
 `;
 
-export const ContactForm = ({ createContact, contacts }) => {
+export const ContactForm = ({ createContact, contacts = [] }) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
@@ -65,7 +65,7 @@ export const ContactForm = ({ createContact, contacts }) => {
       <label>
         <Name>Number</Name>
         <Input
-          type="phone"
+          type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
