@@ -24,7 +24,7 @@ export function App() {
 
   useEffect(() => {
     trigger({ name: filter });
-  }, [filter]);
+  }, [filter, trigger]);
 
   useEffect(() => {
     trigger();
