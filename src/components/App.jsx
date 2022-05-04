@@ -10,20 +10,23 @@ import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 
 export function App() {
-  const [trigger, { data, error: contactsError }] = useLazyFetchContactQuery();
+  const [trigger, { data, error }] = useLazyFetchContactQuery();
+
   const [createContact, { error: createContactError }] =
     useCreateContactMutation();
 
   const filter = useSelector((state) => state.filter.value);
 
   useEffect(() => {
-    if (contactsError || createContactError) {
+    if (createContactError) {
       toast.error("Error");
     }
-  }, [contactsError, createContactError]);
+  }, [createContactError]);
 
   useEffect(() => {
-    trigger({ name: filter });
+    if (filter) {
+      trigger({ name: filter });
+    }
   }, [filter, trigger]);
 
   useEffect(() => {
@@ -45,7 +48,7 @@ export function App() {
       }}
     >
       <ContactForm createContact={createContact} contacts={data} />
-      <ContactList contacts={data} />
+      <ContactList contacts={error ? [] : data} />
       <FilterInput />
     </div>
   );
